@@ -7,6 +7,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="新買醉積分">
   <meta name="theme-color" content="#f97316">
+  <!-- 防止 HTML 被快取 -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>新買醉餐酒館 · 員工積分手冊</title>
   
   <!-- Tailwind CSS -->
@@ -103,8 +107,14 @@
   <!-- React 應用掛載點 -->
   <div id="root"></div>
 
-  <!-- 應用程式 bundle -->
-  <script src="bundle.js"></script>
+  <!-- 應用程式 bundle（用 timestamp 避免瀏覽器快取舊版） -->
+  <script>
+    // 每次載入頁面時用當前時間戳請求 bundle.js
+    // 這樣瀏覽器絕不會用快取的舊版本
+    var script = document.createElement('script');
+    script.src = 'bundle.js?v=' + Date.now();
+    document.body.appendChild(script);
+  </script>
   
   <script>
     // React 掛載完成後隱藏載入畫面
